@@ -191,7 +191,7 @@ class ShipSprite(pygame.sprite.Sprite):
                 self.shot = BulletSprite(x, y)
                 self.shot.add(self.groups)
 
-            if self.health < 0:
+            if self.health <= 0:
                 self.kill()
         else:
             if not self.in_position:
@@ -316,8 +316,11 @@ def main():
         hit_ships = pygame.sprite.spritecollide(ship, enemies, True)
         for i in hit_ships:
             ship.health -= 15
+            if ship.health < 0:
+                ship.health = 0
+                exit
 
-        if ship.health < 0:
+        if ship.health == 0:
             if deadtimer:
                 deadtimer -= 1
             else:
